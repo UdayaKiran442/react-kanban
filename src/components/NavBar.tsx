@@ -42,7 +42,7 @@ const NavBar: React.FC = () => {
                 <p>Grouping</p>
                 <div className="w-40">
                   <FormControl fullWidth>
-                    <Select defaultValue="Status" onChange={handleChange}>
+                    <Select onChange={handleChange}>
                       <MenuItem value="Status">Status</MenuItem>
                       <MenuItem value="User">User</MenuItem>
                       <MenuItem value="Priority">Priority</MenuItem>
