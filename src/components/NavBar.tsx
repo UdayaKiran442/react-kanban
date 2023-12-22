@@ -1,12 +1,18 @@
 import React, { useContext } from "react";
 import { IoMoonSharp } from "react-icons/io5";
 import { CiSun } from "react-icons/ci";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 
 import { AppContext } from "../context/Provider";
 
 const NavBar: React.FC = () => {
-  const { darkMode, setDarkMode } = useContext(AppContext);
+  const { darkMode, setDarkMode, setGrouping } = useContext(AppContext);
   const onChangeTheme = () => {
     console.log("click");
     if (darkMode) {
@@ -16,6 +22,11 @@ const NavBar: React.FC = () => {
       setDarkMode(true);
       document.documentElement.classList.add("dark");
     }
+  };
+
+  const handleChange = (e: SelectChangeEvent) => {
+    console.log("Grouping", e.target.value);
+    setGrouping(e.target.value as string);
   };
 
   return (
@@ -31,7 +42,7 @@ const NavBar: React.FC = () => {
                 <p>Grouping</p>
                 <div className="w-40">
                   <FormControl fullWidth>
-                    <Select defaultValue="Status">
+                    <Select defaultValue="Status" onChange={handleChange}>
                       <MenuItem value="Status">Status</MenuItem>
                       <MenuItem value="User">User</MenuItem>
                       <MenuItem value="Priority">Priority</MenuItem>
