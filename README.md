@@ -2,6 +2,11 @@
 
 - Can group tasks based on User, Priority and Status
 
+## Running the project
+- In your terminal clone the repository.
+- Enter the project folder and install necessary packages using `npm i`.
+- Run the project with command `npm run dev`. The project will run on localhost:5153 by default.
+
 ## Tech stack used
 - Starter template used in project is Vite+React Typescript.
 - Tailwind CSS is used to style the components.
