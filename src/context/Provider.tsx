@@ -73,8 +73,10 @@ export const AppContext = createContext<ContextObject>({
 const Provider = ({ children }: ProviderProps) => {
   const [darkMode, setDarkMode] = useState<boolean>(false);
   const [grouping, setGrouping] = useState<string>("Status");
+
   const [userObj, setUserObj] = useState<UserObj>({});
   const [userAvl, setUserAvl] = useState<UserAvailableObj>({});
+
   const [tickets, setTickets] = useState<Array<Tickets>>([]);
   const [users, setUsers] = useState<Array<User>>([]);
   return (

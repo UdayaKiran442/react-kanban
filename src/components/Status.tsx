@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useContext, useEffect, useState } from "react";
 
+import ProfilePhoto from "./ProfilePhoto";
+
 import { priorityIcons, statusIcons } from "../utils/icons";
+import { useUser } from "../utils/user";
 
 import fetchTicketsApi from "../utils/api";
 import grouping from "../utils/grouping";
+
 import { AppContext } from "../context/Provider";
-import { useUser } from "../utils/user";
-import ProfilePhoto from "./ProfilePhoto";
 
 interface ticket {
   id: string;

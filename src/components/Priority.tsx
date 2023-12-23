@@ -57,6 +57,7 @@ const Priority: React.FC = () => {
   }, [tickets]);
 
   useUser();
+
   return (
     <div>
       <div className="flex gap-7 p-5">

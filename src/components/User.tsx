@@ -2,9 +2,11 @@
 import React, { useContext, useEffect, useState } from "react";
 
 import fetchTicketsApi from "../utils/api";
-import { priorityIcons, statusIcons } from "../utils/icons";
-import { AppContext } from "../context/Provider";
 import { useUser } from "../utils/user";
+import { priorityIcons, statusIcons } from "../utils/icons";
+
+import { AppContext } from "../context/Provider";
+
 import ProfilePhoto from "./ProfilePhoto";
 
 interface User {
@@ -26,6 +28,7 @@ const User: React.FC = () => {
   const { userObj, userAvl, tickets, setTickets, setUsers } =
     useContext(AppContext);
   const [groupByUser, setGroupByUser] = useState({});
+
   useEffect(() => {
     const fetchTickets = async () => {
       const result = await fetchTicketsApi();
@@ -51,7 +54,9 @@ const User: React.FC = () => {
     console.log("Grouping users:", groupedObj);
     setGroupByUser(groupedObj);
   }, [tickets]);
+
   useUser();
+
   return (
     <div>
       <div className="flex gap-7 p-5">
