@@ -7,7 +7,15 @@ import backlog from "../assets/Backlog.png";
 import todo from "../assets/ToDo.png";
 import inProgress from "../assets/InProgress.png";
 
-export const priorityIcons = {
+interface StatusIcons {
+  [key: string]: string;
+}
+
+interface PriorityIcons {
+  [key: number]: string;
+}
+
+export const priorityIcons: PriorityIcons = {
   0: priority0,
   1: priority1,
   2: priority2,
@@ -15,7 +23,7 @@ export const priorityIcons = {
   4: priority4,
 };
 
-export const statusIcons = {
+export const statusIcons: StatusIcons = {
   Backlog: backlog,
   Todo: todo,
   "In Progress": inProgress,

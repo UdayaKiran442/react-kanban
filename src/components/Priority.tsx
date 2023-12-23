@@ -8,7 +8,11 @@ import { useUser } from "../utils/user";
 
 import { AppContext } from "../context/Provider";
 
-const priorityNumber = {
+interface PriorityNumber {
+  [key: number]: string;
+}
+
+const priorityNumber: PriorityNumber = {
   0: "No Priority",
   1: "Low",
   2: "Medium",
