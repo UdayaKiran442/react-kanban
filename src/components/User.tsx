@@ -37,6 +37,7 @@ const User: React.FC = () => {
     };
     fetchTickets();
   }, []);
+
   useEffect(() => {
     users.forEach((user: User) => {
       if (!obj[user.id]) {
