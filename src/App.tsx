@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useLayoutEffect } from "react";
 import NavBar from "./components/NavBar";
 import { AppContext } from "./context/Provider";
 import Status from "./components/Status";
@@ -7,7 +7,7 @@ import Priority from "./components/Priority";
 
 function App() {
   const { grouping } = useContext(AppContext);
-  useEffect(() => {
+  useLayoutEffect(() => {
     console.log(grouping);
   }, [grouping]);
   return (
