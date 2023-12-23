@@ -1,21 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
-import fetchTicketsApi from "../utils/api";
+import React, { useContext, useEffect, useState } from "react";
+
 import ProfilePhoto from "./ProfilePhoto";
 
-interface UserObj {
-  [key: string]: string;
-}
+import fetchTicketsApi from "../utils/api";
+import { useUser } from "../utils/user";
 
-interface UserAvailableObj {
-  [key: string]: boolean;
-}
-
-interface User {
-  id: string;
-  available: boolean;
-  name: string;
-}
+import { AppContext } from "../context/Provider";
 
 const priorityNumber = {
   0: "No Priority",
@@ -35,11 +26,9 @@ interface ticket {
 }
 
 const Priority: React.FC = () => {
-  const [tickets, setTickets] = useState([]);
-  const [users, setUsers] = useState([]);
   const [groupByPriority, setGroupByPriority] = useState({});
-  const [userObj, setUserObj] = useState<UserObj>({});
-  const [userAvl, setUserAvl] = useState<UserAvailableObj>({});
+  const { tickets, userObj, userAvl, setTickets, setUsers } =
+    useContext(AppContext);
 
   useEffect(() => {
     const fetchTickets = async () => {
@@ -49,17 +38,7 @@ const Priority: React.FC = () => {
       setUsers(result.users);
     };
     fetchTickets();
-  }, []);
-
-  useEffect(() => {
-    users.forEach((user: User) => {
-      if (!userObj[user.id]) {
-        userObj[user.id] = user.name;
-        userAvl[user.id] = user.available;
-      }
-    });
-    console.log(userObj);
-  }, [users]);
+  }, [setTickets, setUsers]);
 
   useEffect(() => {
     const grouping = (arr: any) => {
@@ -77,6 +56,7 @@ const Priority: React.FC = () => {
     setGroupByPriority(groupedObj);
   }, [tickets]);
 
+  useUser();
   return (
     <div>
       <div className="flex gap-7 p-5">

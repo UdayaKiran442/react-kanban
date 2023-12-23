@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import fetchTicketsApi from "../utils/api";
 import { priorityIcons, statusIcons } from "../utils/icons";
-
-interface Obj {
-  [key: string]: string;
-}
+import { AppContext } from "../context/Provider";
+import { useUser } from "../utils/user";
+import ProfilePhoto from "./ProfilePhoto";
 
 interface User {
   id: string;
@@ -24,9 +23,8 @@ interface ticket {
 }
 
 const User: React.FC = () => {
-  const [obj, setObj] = useState<Obj>({});
-  const [tickets, setTickets] = useState([]);
-  const [users, setUsers] = useState([]);
+  const { userObj, userAvl, tickets, setTickets, setUsers } =
+    useContext(AppContext);
   const [groupByUser, setGroupByUser] = useState({});
   useEffect(() => {
     const fetchTickets = async () => {
@@ -36,16 +34,7 @@ const User: React.FC = () => {
       setUsers(result.users);
     };
     fetchTickets();
-  }, []);
-
-  useEffect(() => {
-    users.forEach((user: User) => {
-      if (!obj[user.id]) {
-        obj[user.id] = user.name;
-      }
-    });
-    console.log(obj);
-  }, [users]);
+  }, [setTickets, setUsers]);
 
   useEffect(() => {
     const grouping = (arr: any) => {
@@ -62,15 +51,7 @@ const User: React.FC = () => {
     console.log("Grouping users:", groupedObj);
     setGroupByUser(groupedObj);
   }, [tickets]);
-
-  //   useEffect(() => {
-  //     console.log(groupByUser);
-  //     Object.entries(groupByUser).map(([key]: any) => {
-  //       console.log(key);
-  //       console.log(obj[key]);
-  //     });
-  //   }, [groupByUser, obj]);
-
+  useUser();
   return (
     <div>
       <div className="flex gap-7 p-5">
@@ -80,8 +61,12 @@ const User: React.FC = () => {
               <div key={index} className="">
                 <div className="flex flex-wrap justify-between">
                   <div className="flex gap-1">
+                    <ProfilePhoto
+                      name={userObj[status]}
+                      availability={userAvl[status]}
+                    />
                     <h2 className="dark:text-white">
-                      {obj[status.toString()]}
+                      {userObj[status.toString()]}
                     </h2>
                     <p className="text-secondaryBlack">
                       {statusTickets.length}

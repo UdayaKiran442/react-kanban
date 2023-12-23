@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { priorityIcons, statusIcons } from "../utils/icons";
 
 import fetchTicketsApi from "../utils/api";
 import grouping from "../utils/grouping";
+import { AppContext } from "../context/Provider";
+import { useUser } from "../utils/user";
+import ProfilePhoto from "./ProfilePhoto";
 
 interface ticket {
   id: string;
@@ -16,7 +19,8 @@ interface ticket {
 }
 
 const Status: React.FC = () => {
-  const [tickets, setTickets] = useState([]);
+  const { tickets, userObj, userAvl, setTickets, setUsers } =
+    useContext(AppContext);
   const [groupedTickets, setGroupedTickets] = useState({});
 
   useEffect(() => {
@@ -24,9 +28,10 @@ const Status: React.FC = () => {
       const result = await fetchTicketsApi();
       console.log(result.tickets);
       setTickets(result.tickets);
+      setUsers(result.users);
     };
     fetchTickets();
-  }, []);
+  }, [setTickets, setUsers]);
 
   useEffect(() => {
     if (tickets.length > 0) {
@@ -49,9 +54,7 @@ const Status: React.FC = () => {
     }
   }, [tickets]);
 
-  useEffect(() => {
-    console.log(groupedTickets);
-  });
+  useUser();
 
   return (
     <div>
@@ -76,7 +79,13 @@ const Status: React.FC = () => {
                 <div className="mt-3">
                   {statusTickets.map((ticket: ticket) => (
                     <div className="bg-white dark:bg-[#161B22] mb-4 max-w-72 p-2">
-                      <h3 className="text-secondaryBlack">{ticket.id}</h3>
+                      <div className="flex justify-between">
+                        <h3 className="text-secondaryBlack">{ticket.id}</h3>
+                        <ProfilePhoto
+                          name={userObj[ticket.userId]}
+                          availability={userAvl[ticket.userId]}
+                        />
+                      </div>
                       <p className="dark:text-white">{ticket.title}</p>
                       <div className="flex gap-1 mt-2">
                         <img
