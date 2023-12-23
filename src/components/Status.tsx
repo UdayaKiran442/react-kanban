@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 
 import priority0 from "../assets/no-priority-0.png";
 import priority1 from "../assets/low-1.png";
 import priority2 from "../assets/medium-2.png";
 import priority3 from "../assets/high-3.png";
 import priority4 from "../assets/urgent-4.png";
-
 import backlog from "../assets/Backlog.png";
 import todo from "../assets/ToDo.png";
 import inProgress from "../assets/InProgress.png";
+
+import fetchTicketsApi from "../utils/api";
+import grouping from "../utils/grouping";
 
 const priorityIcons = {
   0: priority0,
@@ -41,11 +42,7 @@ const Status: React.FC = () => {
 
   useEffect(() => {
     const fetchTickets = async () => {
-      const result = (
-        await axios.get(
-          "https://tfyincvdrafxe7ut2ziwuhe5cm0xvsdu.lambda-url.ap-south-1.on.aws/ticketAndUsers"
-        )
-      ).data;
+      const result = await fetchTicketsApi();
       console.log(result.tickets);
       setTickets(result.tickets);
     };
@@ -53,17 +50,8 @@ const Status: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const groupedTicketsByStatus = (tickets: any) => {
-      const grouped: any = {};
-      tickets.forEach((ticket: any) => {
-        const status = ticket.status;
-        grouped[status] = grouped[status] || [];
-        grouped[status].push(ticket);
-      });
-      return grouped;
-    };
     if (tickets.length > 0) {
-      const grouped = groupedTicketsByStatus(tickets);
+      const grouped = grouping(tickets);
       console.log("Grouped tickets", grouped);
       // Convert object to array of key-value pairs
       const entries = Object.entries(grouped);
