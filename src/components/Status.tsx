@@ -8,12 +8,22 @@ import priority2 from "../assets/medium-2.png";
 import priority3 from "../assets/high-3.png";
 import priority4 from "../assets/urgent-4.png";
 
+import backlog from "../assets/Backlog.png";
+import todo from "../assets/ToDo.png";
+import inProgress from "../assets/InProgress.png";
+
 const priorityIcons = {
   0: priority0,
   1: priority1,
   2: priority2,
   3: priority3,
   4: priority4,
+};
+
+const statusIcons = {
+  Backlog: backlog,
+  Todo: todo,
+  "In Progress": inProgress,
 };
 
 interface ticket {
@@ -85,7 +95,8 @@ const Status: React.FC = () => {
               <div key={index} className="">
                 <div className="flex flex-wrap justify-between">
                   <div className="flex gap-1">
-                    <h2>{status}</h2>
+                    <img src={statusIcons[status]} />
+                    <h2 className="dark:text-white">{status}</h2>
                     <p className="text-secondaryBlack">
                       {statusTickets.length}
                     </p>
@@ -97,9 +108,9 @@ const Status: React.FC = () => {
                 </div>
                 <div className="mt-3">
                   {statusTickets.map((ticket: ticket) => (
-                    <div className="bg-white mb-4 max-w-72 p-2">
+                    <div className="bg-white dark:bg-[#161B22] mb-4 max-w-72 p-2">
                       <h3 className="text-secondaryBlack">{ticket.id}</h3>
-                      <p>{ticket.title}</p>
+                      <p className="dark:text-white">{ticket.title}</p>
                       <div className="flex gap-1 mt-2">
                         <img
                           src={priorityIcons[ticket.priority]}
@@ -107,7 +118,7 @@ const Status: React.FC = () => {
                           width={20}
                           height={20}
                         />
-                        <p className="text-secondaryBlack border-[#E6E7EB] px-1 border w-max h-max text-xs">
+                        <p className="text-secondaryBlack dark:border-secondaryBlack border-[#E6E7EB] px-1 border w-max h-max text-xs">
                           {ticket.tag}
                         </p>
                       </div>
